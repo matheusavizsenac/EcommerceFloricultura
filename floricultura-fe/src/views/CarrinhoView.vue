@@ -2,7 +2,7 @@
   <div>
       <CardProduto class="produto">
         <template #header>
-          <ButtonPrime icon="pi pi-trash" style="margin-left: .5em"/>
+          <ButtonPrime id="buttonDeletar" icon="pi pi-trash" />
         </template>
         <template #title>
             Teste Produto
@@ -13,13 +13,13 @@
         </template>
     </CardProduto>
   </div>
-  <div class="carrinho">
+  <div id="divSeuCep" class="carrinho">
       <span class="p-input-icon-left">
             <i class="pi pi-truck"/>
             <InputText type="text" v-model="value" placeholder="Seu CEP" />
         </span>
     </div>
-    <ButtonPrime label="Finalizar compra" icon="pi pi-check" iconPos="right" />
+    <ButtonPrime id="buttonFinalizarCompra" label="Finalizar compra" icon="pi pi-check" iconPos="right" />
   </template>
   
 <script>
@@ -31,3 +31,15 @@
     }
   }
 </script>
+
+<style scoped>
+ #buttonDeletar {
+  float: right;
+}
+#divSeuCep{
+  margin-top: 15px;
+}
+#buttonFinalizarCompra{
+  margin-top: 15px;
+}
+ </style>
