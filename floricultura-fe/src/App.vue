@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ButtonPrime id="buttonUser" icon="pi pi-user" iconPos="right" />
     <div class="header">
       <img class="logo-header" alt="Floricultura logo" src="@/assets/logo-floricultura.png">
       <div>
@@ -52,6 +53,10 @@ body {
 .tab-menu-geral {
   margin-bottom: 10px;
 }
-
+#buttonUser{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
 
 </style>
