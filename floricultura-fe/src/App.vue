@@ -1,6 +1,10 @@
 <template>
   <div>
-    <ButtonPrime id="buttonUser" icon="pi pi-user" iconPos="right" />
+    <div>
+        <router-link :to="{ name: 'usuario' }">
+          <ButtonPrime id="buttonUser" icon="pi pi-user" iconPos="right" />
+        </router-link>
+    </div>
     <div class="header">
       <img class="logo-header" alt="Floricultura logo" src="@/assets/logo-floricultura.png">
       <div>
@@ -31,7 +35,6 @@ export default {
 </script>
 
 <style>
-
 body {
   background: #eff3f8;
 }

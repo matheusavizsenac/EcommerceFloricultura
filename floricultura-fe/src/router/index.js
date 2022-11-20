@@ -2,6 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ProdutosView from '../views/ProdutosView.vue'
 import CarrinhoView from '../views/CarrinhoView.vue'
+import UsuarioView from '../views/UsuarioView.vue'
+import NovoUsuarioView from '../views/NovoUsuarioView.vue'
+import LoginUsuarioView from '../views/LoginUsuarioView.vue'
+
+
 
 const routes = [
   {
@@ -18,6 +23,21 @@ const routes = [
     path: '/carrinho',
     name: 'carrinho',
     component: CarrinhoView
+  },
+  {
+    path: '/usuario',
+    name: 'usuario',
+    component: UsuarioView
+  },
+  {
+    path: '/novousuario',
+    name: 'novoUsuario',
+    component: NovoUsuarioView
+  },
+  {
+    path: '/loginusuario',
+    name: 'loginUsuario',
+    component: LoginUsuarioView
   }
 ]
 
