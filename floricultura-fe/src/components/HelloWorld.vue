@@ -1,6 +1,6 @@
 <template>
   <div> 
-       <CarouselList :value="listaDeProdutos" :numVisible="3" :autoplayInterval="3000">
+       <CarouselList :value="listaDeProdutos" :numVisible="3"  :numScroll="3" :autoplayInterval="3000">
            <template #item="slotProps">
              <div class="item-produto">
                <p>{{slotProps.data.nome}}</p>
@@ -59,6 +59,10 @@
    box-shadow: 0 0 5px #ccc;
    border-radius: 10px;
    margin: 10px;
+ }
+ img{
+  max-width: 50%;
+  max-height: 25%;
  }
  </style>
  
