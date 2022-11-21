@@ -1,12 +1,12 @@
 <template>
   <div> 
-       <CarouselList :value="produtos" :numVisible="3" :autoplayInterval="3000">
+       <CarouselList :value="listaDeProdutos" :numVisible="3" :autoplayInterval="3000">
            <template #item="slotProps">
              <div class="item-produto">
                <p>{{slotProps.data.nome}}</p>
-               <p>{{slotProps.data.precoUnidade}}</p>
+               <p>{{slotProps.data.preco}}</p>]
                <div v-if="slotProps.data.imagem">
-                 <img :src="require('../assets/produtos/' + slotProps.data.imagem)">
+                 <img :src="require('../assets/produtos' + slotProps.data.imagem)">
                </div>
              </div>
          </template>
@@ -15,6 +15,7 @@
  </template>
  
  <script>
+ import axios from 'axios'
  export default {
    name: 'HelloWorld',
    props: {
@@ -22,19 +23,17 @@
    },
    data(){
      return {
- 
-     produtos:[
-       {id: 1, nome: 'Florzinha', precoUnidade: 'R$ 2,99'}, 
-       {id: 2, nome: 'lírio-do-brejo', precoUnidade: 'R$ 2,99', imagem: 'lirio-do-brejo.jpeg'}, 
-       {id: 3, nome: 'C', precoUnidade: 'R$ 2,99'},
-       {id: 4, nome: 'D', precoUnidade: 'R$ 2,99'}, 
-       {id: 5, nome: 'E', precoUnidade: 'R$ 2,99'}, 
-       {id: 6, nome: 'F', precoUnidade: 'R$ 2,99'},
-       {id: 7, nome: 'G', precoUnidade: 'R$ 2,99'}, 
-       {id: 8, nome: 'H', precoUnidade: 'R$ 2,99'}, 
-       {id: 9, nome: 'I', precoUnidade: 'R$ 2,99'},
-     ]
+      listaDeProdutos:[],
      }
+   },
+   components: {},
+   mounted() {
+    this.getProdutos()
+   },
+   methods: {
+    getProdutos(){
+      axios.get('floriculturaapp/').then(response => {this.listaDeProdutos = response.data})
+    }
    }
  }
  </script>
