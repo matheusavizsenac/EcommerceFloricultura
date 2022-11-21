@@ -4,7 +4,7 @@
            <template #item="slotProps">
              <div class="item-produto">
                <p>{{slotProps.data.nome}}</p>
-               <p>{{slotProps.data.preco}}</p>]
+               <p>R$ {{slotProps.data.preco}}</p>
                <div v-if="slotProps.data.imagem">
                  <img :src="require('../assets/produtos' + slotProps.data.imagem)">
                </div>
