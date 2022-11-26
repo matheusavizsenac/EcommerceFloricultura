@@ -1,24 +1,63 @@
 <template>
   <div class="content">
-    <CardProduto class="produto">
+    <CardProduto class="produto" v-for="(produto) in listaDeProdutos" :key="produto.id">
+        <template #header>
+          <ImagePrime class="imagemProduto" :src="require('../assets/produtos' + produto.imagem)" :preview="true">
+            <template #indicator>
+              Visualizar produto
+            </template>
+          </ImagePrime>
+        </template>
         <template #title>
-            Teste Produto
+          {{produto.nome}}
         </template>
         <template #content>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-            quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
+          {{produto.descricao}}
+          <br/>
+          Preço
+          {{produto.preco}}
         </template>
         <template #footer>
-            <ButtonPrime icon="pi pi-shopping-bag" label="Comprar"/>
-            <ButtonPrime icon="pi pi-eye" label="Espiar" class="p-button-secondary" style="margin-left: .5em" />
+            <ButtonPrime icon="pi pi-shopping-bag" label="Comprar"  @click="incrementCounter"/>
         </template>
     </CardProduto>
   </div>
 </template>
 
+<script>
+import axios from 'axios'
+export default {
+  name: 'HelloWorld',
+  props: {
+    msg: String
+  },
+  data(){
+    return {
+     listaDeProdutos:[],
+     counter: 0
+    }
+  },
+  components: {},
+  mounted() {
+   this.getProdutos()
+  },
+  methods: {
+    getProdutos(){
+      axios.get('floriculturaapp/').then(response => {
+        this.listaDeProdutos = response.data
+      })
+    },
+   incrementCounter() {
+      this.counter++;
+    }
+  }
+}
+</script>
+
 <style>
 .produto{
   width: 75%;
+  margin: 2%;
 }
 
 .content {
@@ -26,4 +65,11 @@
   align-items: center;
   justify-content: center;
 }
+
+.imagemProduto {
+  width: 100%;
+  height: 200px;
+  display: flex !important;
+}
+
 </style>

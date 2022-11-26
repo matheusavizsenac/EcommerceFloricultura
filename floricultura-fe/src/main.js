@@ -5,6 +5,7 @@ import PrimeVue from 'primevue/config';
 import TabMenu from 'primevue/tabmenu';
 import InputText from 'primevue/inputtext';
 import Carousel from 'primevue/carousel';
+import ImagePrime from 'primevue/image';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
 import axios from 'axios';
@@ -27,5 +28,6 @@ app.component('InputText', InputText);
 app.component('CarouselList', Carousel);
 app.component('CardProduto', Card);
 app.component('ButtonPrime', Button);
+app.component('ImagePrime', ImagePrime);
 
 app.mount('#app')
