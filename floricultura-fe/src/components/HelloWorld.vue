@@ -32,7 +32,9 @@
    },
    methods: {
     getProdutos(){
-      axios.get('floriculturaapp/').then(response => {this.listaDeProdutos = response.data})
+      axios.get('floriculturaapp/produto').then(response => {
+        this.listaDeProdutos = response.data
+      })
     }
    }
  }

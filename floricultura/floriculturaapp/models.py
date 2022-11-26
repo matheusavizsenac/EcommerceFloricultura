@@ -46,3 +46,9 @@ class ProdutoHistoricoCompras(models.Model):
     quantidade = models.IntegerField(null=False)
     idProduto = models.ForeignKey(Produto, on_delete=models.CASCADE, related_name="produto_historico")
     idHistoricoCompras = models.ForeignKey(HistoricoCompras, on_delete=models.CASCADE, related_name="produto_historico")
+
+
+class Carrinho(models.Model):
+    quantidade = models.IntegerField(null=False)
+    idProduto = models.ForeignKey(Produto, on_delete=models.CASCADE, related_name="carrinho_produto")
+    idUsuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="carrinho_usuario")

@@ -1,15 +1,16 @@
 <template>
   <div>
-      <CardProduto class="produto">
+    <CardProduto class="produto" v-for="(carrinho) in listaCarrinho" :key="carrinho.id">
         <template #header>
-          <ButtonPrime id="buttonDeletar" icon="pi pi-trash" />
+          <ButtonPrime id="buttonDeletar" icon="pi pi-trash" @click="DeleteItemCarrinho(carrinho.id)" />
         </template>
         <template #title>
-            Teste Produto
+          {{carrinho.idProduto.nome}}
         </template>
         <template #content>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-            quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
+          <p>Quantidade {{carrinho.quantidade}}</p>
+          <br/> 
+          Preço R$ {{carrinho.idProduto.preco * carrinho.quantidade}}
         </template>
     </CardProduto>
   </div>
@@ -19,17 +20,37 @@
             <InputText type="text" v-model="value" placeholder="Seu CEP" />
         </span>
     </div>
-    <ButtonPrime id="buttonFinalizarCompra" label="Finalizar compra" icon="pi pi-check" iconPos="right" />
+    <router-link :to="{ name: 'FinalizarCompraView'}">
+      <ButtonPrime id="buttonFinalizarCompra" label="Finalizar compra" icon="pi pi-check" iconPos="right" />
+    </router-link>
   </template>
   
 <script>
+import axios from 'axios'
   export default {
     data() {
       return {
         value: '',
+        listaCarrinho: []
       }
-    }
+    },
+    components: {},
+      mounted() {
+      this.getCarrinho()
+      },
+    methods: {
+      getCarrinho(){
+        axios.get('floriculturaapp/carrinho').then(response => {
+          this.listaCarrinho = response.data
+        })
+    },
+      DeleteItemCarrinho(id){
+          axios.delete('floriculturaapp/carrinho/'+ id).then(() => {
+            this.getCarrinho();
+          })
+      }
   }
+}
 </script>
 
 <style scoped>

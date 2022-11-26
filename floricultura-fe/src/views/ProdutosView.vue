@@ -14,11 +14,11 @@
         <template #content>
           {{produto.descricao}}
           <br/>
-          Preço
+          Preço R$
           {{produto.preco}}
         </template>
         <template #footer>
-            <ButtonPrime icon="pi pi-shopping-bag" label="Comprar"  @click="incrementCounter"/>
+            <ButtonPrime icon="pi pi-shopping-bag" label="Comprar"  @click="AdicionarCarrinho(produto.id)" />
         </template>
     </CardProduto>
   </div>
@@ -34,7 +34,6 @@ export default {
   data(){
     return {
      listaDeProdutos:[],
-     counter: 0
     }
   },
   components: {},
@@ -43,12 +42,28 @@ export default {
   },
   methods: {
     getProdutos(){
-      axios.get('floriculturaapp/').then(response => {
+      axios.get('floriculturaapp/produto').then(response => {
         this.listaDeProdutos = response.data
       })
     },
-   incrementCounter() {
-      this.counter++;
+    AdicionarCarrinho(produto){
+      //post de produto pro carrinho
+      axios.post('floriculturaapp/carrinho', {
+        quantidade: 1,
+        idUsuario: 1,
+        idProduto: produto
+       }, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
+      })
+      //mostrar mensagem de adicionado
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });     
     }
   }
 }

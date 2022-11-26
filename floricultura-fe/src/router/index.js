@@ -5,6 +5,7 @@ import CarrinhoView from '../views/CarrinhoView.vue'
 import UsuarioView from '../views/UsuarioView.vue'
 import NovoUsuarioView from '../views/NovoUsuarioView.vue'
 import LoginUsuarioView from '../views/LoginUsuarioView.vue'
+import FinalizarCompraView from '../views/FinalizarCompraView.vue'
 
 
 
@@ -38,7 +39,12 @@ const routes = [
     path: '/loginusuario',
     name: 'loginUsuario',
     component: LoginUsuarioView
-  }
+  },
+  {
+  path: '/FinalizarCompraView',
+  name: 'FinalizarCompraView',
+  component: FinalizarCompraView
+}
 ]
 
 const router = createRouter({
