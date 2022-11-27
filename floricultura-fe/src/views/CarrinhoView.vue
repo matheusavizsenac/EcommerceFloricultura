@@ -14,15 +14,17 @@
         </template>
     </CardProduto>
   </div>
-  <div id="divSeuCep" class="carrinho">
-      <span class="p-input-icon-left">
-            <i class="pi pi-truck"/>
-            <InputText type="text" v-model="value" placeholder="Seu CEP" />
-        </span>
-    </div>
-    <router-link :to="{ name: 'FinalizarCompraView'}">
-      <ButtonPrime id="buttonFinalizarCompra" label="Finalizar compra" icon="pi pi-check" iconPos="right" />
-    </router-link>
+  <CardProduto class="produto">
+        <template #title>
+          Total:   {{valorTotal}}
+        </template>
+        <template #content>
+          <p>valor final</p>
+          <router-link :to="{ name: 'FinalizarCompraView'}">
+               <ButtonPrime id="buttonFinalizarCompra" label="Finalizar compra" icon="pi pi-check" iconPos="right" />
+          </router-link>
+        </template>
+    </CardProduto>
   </template>
   
 <script>
@@ -49,6 +51,17 @@ import axios from 'axios'
             this.getCarrinho();
           })
       }
+  },
+  computed: {
+    valorTotal() {
+      var valorFinal = 0;
+      for (let i = 0; i < this.listaCarrinho.length; i++) {
+        if (this.listaCarrinho[i].idUsuario.id == 1) {
+          valorFinal = valorFinal + (this.listaCarrinho[i].idProduto.preco * this.listaCarrinho[i].quantidade);
+        }
+      }
+      return valorFinal
+    }
   }
 }
 </script>
