@@ -19,7 +19,6 @@
           Total:   {{valorTotal}}
         </template>
         <template #content>
-          <p>valor final</p>
           <router-link :to="{ name: 'FinalizarCompraView'}">
                <ButtonPrime id="buttonFinalizarCompra" label="Finalizar compra" icon="pi pi-check" iconPos="right" />
           </router-link>
