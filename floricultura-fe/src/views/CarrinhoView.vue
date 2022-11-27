@@ -8,23 +8,37 @@
           {{carrinho.idProduto.nome}}
         </template>
         <template #content>
-          <p>Quantidade {{carrinho.quantidade}}</p>
+          <div class="col-12 md:col-4">
+              <div class="p-inputgroup">
+                  <ButtonPrime icon="pi pi-minus" @click="updateQuantidade(carrinho, carrinho.quantidade - 1)" />
+                  <InputText readonly v-model="carrinho.quantidade" placeholder="Quantidade"/>
+                  <ButtonPrime icon="pi pi-plus" @click="updateQuantidade(carrinho, carrinho.quantidade + 1)" />
+              </div>
+          </div>
+
           <br/> 
-          Preço R$ {{carrinho.idProduto.preco * carrinho.quantidade}}
+          Preço R$ {{carrinho.idProduto.preco}}
         </template>
     </CardProduto>
   </div>
-  <CardProduto class="produto">
+  <CardProduto class="produto" v-if="listaCarrinho.length > 0">
         <template #title>
-          Total:   {{valorTotal}}
+          Total: R$  {{valorTotal}}
         </template>
         <template #content>
           <router-link :to="{ name: 'FinalizarCompraView'}">
                <ButtonPrime id="buttonFinalizarCompra" label="Finalizar compra" icon="pi pi-check" iconPos="right" />
           </router-link>
         </template>
-    </CardProduto>
-  </template>
+  </CardProduto>
+  <div class="CarrinhoVazio" v-if="listaCarrinho.length == 0">
+    <CardProduto>
+        <template #title>
+          Adicione itens ao seu carrinho
+        </template>
+  </CardProduto>
+  </div>
+</template>
   
 <script>
 import axios from 'axios'
@@ -37,19 +51,35 @@ import axios from 'axios'
     },
     components: {},
       mounted() {
-      this.getCarrinho()
+      this.updateListCarrinho()
       },
     methods: {
-      getCarrinho(){
+      updateListCarrinho(){
         axios.get('floriculturaapp/carrinho').then(response => {
           this.listaCarrinho = response.data
         })
     },
       DeleteItemCarrinho(id){
           axios.delete('floriculturaapp/carrinho/'+ id).then(() => {
-            this.getCarrinho();
+            this.updateListCarrinho();
           })
-      }
+      },
+      updateQuantidade(carrinho, novaQuantidade) {
+        
+        if (novaQuantidade == 0) {
+          this.DeleteItemCarrinho(carrinho.id)
+        } else {
+          axios.put('floriculturaapp/carrinho/'+ carrinho.id, {   
+            quantidade: novaQuantidade
+          }, {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            }
+          }).then(() => {
+            this.updateListCarrinho();
+          })
+        }
+    }
   },
   computed: {
     valorTotal() {
@@ -74,5 +104,8 @@ import axios from 'axios'
 }
 #buttonFinalizarCompra{
   margin-top: 15px;
+}
+.CarrinhoVazio{
+  text-align: center;
 }
  </style>

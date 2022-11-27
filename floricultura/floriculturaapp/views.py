@@ -30,3 +30,8 @@ class ListaDeCarrinho(APIView):
     def delete(self, request, id):
         Carrinho.objects.filter(id=id).delete()
         return Response('ok')
+    def put(self, request, id):
+        carrinho = Carrinho.objects.get(id=id)
+        carrinho.quantidade = request.POST.get('quantidade')
+        carrinho.save()
+        return Response('ok')
