@@ -42,7 +42,7 @@ class ListaDeCarrinho(APIView):
 
 def envia_dados_pagamento_pagseguro(data):
     response = requests.post('https://sandbox.api.pagseguro.com/order', json=data, headers={'Authorization': 'Bearer 540CD5FAE4074E4D87F9BA20A897A93E'})
-    return response.json()
+    return response.status_code
 
 
 
