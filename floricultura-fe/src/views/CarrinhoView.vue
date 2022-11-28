@@ -36,6 +36,11 @@
         <template #title>
           Adicione itens ao seu carrinho
         </template>
+        <template #content>
+          <router-link :to="{ name: 'produtos'}">
+               <ButtonPrime id="buttonVisualizarProdutos" label="Continuar Comprando" icon="pi-shopping-bag" iconPos="right" />
+          </router-link>
+        </template>
   </CardProduto>
   </div>
 </template>
