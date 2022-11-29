@@ -87,9 +87,11 @@ export default {
   },
   methods: {
   realizarPagamento(){
-    axios.envia_dados_pagamento_pagseguro({
-
+    axios.post('https://sandbox.api.pagseguro.com/order')
+    ({
+     // json=data, 
     })
+    headers={'Authorization': 'Bearer 540CD5FAE4074E4D87F9BA20A897A93E'}
   }
 }
 }
