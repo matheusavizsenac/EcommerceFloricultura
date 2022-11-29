@@ -70,17 +70,27 @@
       </span>
     </div>
 
+    <ButtonPrime id="buttonPagamento" icon="pi-money-bill" label="Realizar Pagamento" @click="realizarPagamento()"/>
+
 
   </div>
 </template>
 
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
       value: '',
     }
+  },
+  methods: {
+  realizarPagamento(){
+    axios.envia_dados_pagamento_pagseguro({
+
+    })
   }
+}
 }
 </script>
