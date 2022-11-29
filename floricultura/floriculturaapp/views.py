@@ -6,6 +6,8 @@ from .models import Usuario
 from .serializers import ProdutoSerializer
 from .serializers import CarrinhoSerializer
 from rest_framework.response import Response
+import requests
+
 # Create your views here.
 
 from django.http import HttpResponse
@@ -30,8 +32,17 @@ class ListaDeCarrinho(APIView):
     def delete(self, request, id):
         Carrinho.objects.filter(id=id).delete()
         return Response('ok')
+
     def put(self, request, id):
         carrinho = Carrinho.objects.get(id=id)
         carrinho.quantidade = request.POST.get('quantidade')
         carrinho.save()
         return Response('ok')
+
+
+def envia_dados_pagamento_pagseguro(data):
+    response = requests.post('https://sandbox.api.pagseguro.com/order', json=data, headers={'Authorization': 'Bearer 540CD5FAE4074E4D87F9BA20A897A93E'})
+    return response.status_code
+
+
+
