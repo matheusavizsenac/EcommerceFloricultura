@@ -87,11 +87,81 @@ export default {
   },
   methods: {
   realizarPagamento(){
-    axios.post('https://sandbox.api.pagseguro.com/order')
-    ({
-     // json=data, 
-    })
-    headers={'Authorization': 'Bearer 540CD5FAE4074E4D87F9BA20A897A93E'}
+    let data = {
+      "reference_id": "ex-00004",
+      "customer": {
+          "name": "Jose da Silva",
+          "email": "email@test.com",
+          "tax_id": "12345678909",
+          "phones": [
+              {
+                  "country": "55",
+                  "area": "11",
+                  "number": "999999999",
+                  "type": "MOBILE"
+              }
+          ]
+      },
+      "items": [
+          {
+              "reference_id": "referencia do item",
+              "name": "nome do item",
+              "quantity": 1,
+              "unit_amount": 500
+          }
+      ],
+      "qr_code": {
+          "amount": {
+              "value": 500
+          }
+      },
+      "shipping": {
+          "address": {
+              "street": "Avenida Brigadeiro Faria Lima",
+              "number": "1384",
+              "complement": "apto 12",
+              "locality": "Pinheiros",
+              "city": "São Paulo",
+              "region_code": "SP",
+              "country": "BRA",
+              "postal_code": "01452002"
+          }
+      },
+      "notification_urls": [
+          "https://meusite.com/notificacoes"
+      ],
+      "charges": [
+          {
+              "reference_id": "referencia do pagamento",
+              "description": "descricao do pagamento",
+              "amount": {
+                  "value": 500,
+                  "currency": "BRL"
+              },
+              "payment_method": {
+                  "type": "CREDIT_CARD",
+                  "installments": 1,
+                  "capture": true,
+                  "card": {
+                      "number": "4111111111111111",
+                      "exp_month": "12",
+                      "exp_year": "2026",
+                      "security_code": "123",
+                      "holder": {
+                          "name": "Jose da Silva"
+                      },
+                      "store": false
+                  }
+              },
+              "notification_urls": [
+                  "https://meusite.com/notificacoes"
+              ]
+          }
+      ]
+    }
+
+    axios.post('floriculturaapp/compra/finalizar', data)
+
   }
 }
 }

@@ -7,6 +7,7 @@ from .serializers import ProdutoSerializer
 from .serializers import CarrinhoSerializer
 from rest_framework.response import Response
 import requests
+import logging
 
 # Create your views here.
 
@@ -40,8 +41,13 @@ class ListaDeCarrinho(APIView):
         return Response('ok')
 
 
+class Compra(APIView):
+    def post(self, request):
+        response = envia_dados_pagamento_pagseguro(request.body.decode())
+        return Response(response)
+
 def envia_dados_pagamento_pagseguro(data):
-    response = requests.post('https://sandbox.api.pagseguro.com/order', json=data, headers={'Authorization': 'Bearer 540CD5FAE4074E4D87F9BA20A897A93E'})
+    response = requests.post('https://sandbox.api.pagseguro.com/order', json=data, headers={'Authorization': 'Bearer 540CD5FAE4074E4D87F9BA20A897A93E','Content-Type': 'application/json'})
     return response.status_code
 
 
