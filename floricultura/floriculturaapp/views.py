@@ -47,8 +47,8 @@ class Compra(APIView):
         return Response(response)
 
 def envia_dados_pagamento_pagseguro(data):
-    response = requests.post('https://sandbox.api.pagseguro.com/order', json=data, headers={'Authorization': 'Bearer 540CD5FAE4074E4D87F9BA20A897A93E','Content-Type': 'application/json'})
-    return response.status_code
+    response = requests.post('https://sandbox.api.pagseguro.com/orders', json=data, headers={'Authorization': 'Bearer 540CD5FAE4074E4D87F9BA20A897A93E','Content-Type': 'application/json', 'Accept': 'application/json'})
+    return response
 
 
 
