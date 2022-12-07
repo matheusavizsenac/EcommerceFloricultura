@@ -27,7 +27,7 @@
         </template>
         <template #content>
           <router-link :to="{ name: 'FinalizarCompraView'}">
-               <ButtonPrime id="buttonFinalizarCompra" label="Finalizar compra" icon="pi pi-check" iconPos="right" @click="LimparCarrinho()" />
+               <ButtonPrime id="buttonFinalizarCompra" label="Finalizar compra" icon="pi pi-check" iconPos="right"/>
           </router-link>
         </template>
   </CardProduto>
@@ -84,12 +84,6 @@ import axios from 'axios'
             this.updateListCarrinho();
           })
         }
-    },
-    LimparCarrinho(){
-      for (let i = 0; i < this.listaCarrinho.length; i++) {
-        this.DeleteItemCarrinho(this.listaCarrinho[i].id)
-      }
-      this.updateListCarrinho()
     }
   },
   computed: {

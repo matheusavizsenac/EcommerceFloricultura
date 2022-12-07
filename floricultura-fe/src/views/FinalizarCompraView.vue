@@ -1,12 +1,12 @@
 <template>
   <div>
     <span class="p-float-label">
-      <InputText id="nomeUsuario" type="text" />
+      <InputText id="nomeUsuario" type="text" v-model="nomeUsuario"/>
       <label for="nomeUsuario">Nome</label>
     </span>
     <br />
     <span class="p-float-label">
-      <InputText id="cpfUsuario" type="text" />
+      <InputText id="cpfUsuario" type="text" v-model="cpfUsuario"/>
       <label for="cpfUsuario">CPF</label>
     </span>
     <br />
@@ -16,7 +16,7 @@
       <div id="divSeuCep" class="carrinho">
         <span class="p-input-icon-left">
           <i class="pi pi-truck" />
-          <InputText type="text" v-model="value" placeholder="Seu CEP" />
+          <InputText type="text" v-model="cep" placeholder="Seu CEP" />
         </span>
       </div>
       <span class="p-float-label">
@@ -83,86 +83,125 @@ export default {
   data() {
     return {
       value: '',
+      nomeUsuario: '',
+      cpfUsuario:'',
+      cep: '',
+      rua:'',
+      bairro: '',
+      cidade:'',
+      estado:'',
+      numero:'',
+      complemento: '',
+      numeroCartao: '',
+      mesExpiracao: '',
+      anoExpiracao: '',
+      codSeguranca: '',
+      nomeCartao: '',
+      listaCarrinho: []
     }
+  },
+  mounted() {
+      this.getCarrinho()
   },
   methods: {
   realizarPagamento(){
-    let data ={
-    "reference_id": "ex-00004",
-    "customer": {
-        "name": "Jose da Silva",
-        "email": "email@test.com",
-        "tax_id": "12345678909",
-        "phones": [
-            {
-                "country": "55",
-                "area": "11",
-                "number": "999999999",
-                "type": "MOBILE"
-            }
-        ]
-    },
-    "items": [
-        {
-            "reference_id": "referencia do item",
-            "name": "nome do item",
-            "quantity": 1,
-            "unit_amount": 500
-        }
-    ],
-    "qr_code": {
-        "amount": {
-            "value": 500
-        }
-    },
-    "shipping": {
-        "address": {
-            "street": "Avenida Brigadeiro Faria Lima",
-            "number": "1384",
-            "complement": "apto 12",
-            "locality": "Pinheiros",
-            "city": "São Paulo",
-            "region_code": "SP",
-            "country": "BRA",
-            "postal_code": "01452002"
-        }
-    },
-    "notification_urls": [
-        "https://meusite.com/notificacoes"
-    ],
-    "charges": [
-        {
-            "reference_id": "referencia do pagamento",
-            "description": "descricao do pagamento",
-            "amount": {
-                "value": 500,
-                "currency": "BRL"
-            },
-            "payment_method": {
-                "type": "CREDIT_CARD",
-                "installments": 1,
-                "capture": true,
-                "card": {
-                    "number": "4111111111111111",
-                    "exp_month": "12",
-                    "exp_year": "2026",
-                    "security_code": "123",
-                    "holder": {
-                        "name": "Jose da Silva"
-                    },
-                    "store": false
-                }
-            },
-            "notification_urls": [
-                "https://meusite.com/notificacoes"
-            ]
-        }
-    ]
-}
+    let dados ={
+      "reference_id": (Math.random() + 1).toString(36).substring(2),
+      "customer": {
+          "name": this.nomeUsuario,
+          "email": "email@test.com",
+          "tax_id": "12345678909",
+          "phones": [
+              {
+                  "country": "55",
+                  "area": "11",
+                  "number": "999999999",
+                  "type": "MOBILE"
+              }
+          ]
+      },
+      "items": [],
+      "qr_code": {
+          "amount": {
+              "value": 500
+          }
+      },
+      "shipping": {
+          "address": {
+              "street": this.rua,
+              "number": this.numero,
+              "complement": this.complemento,
+              "locality": this.bairro,
+              "city": this.cidade,
+              "region_code": this.estado, //usuario precisa informar estado como codigo (UF)
+              "country": "BRA",
+              "postal_code": this.cep
+          }
+      },
+      "notification_urls": [
+          "https://meusite.com/notificacoes"
+      ],
+      "charges": [
+          {
+              "reference_id": "referencia do pagamento",
+              "description": "descricao do pagamento",
+              "amount": {
+                  "value": 500,
+                  "currency": "BRL"
+              },
+              "payment_method": {
+                  "type": "CREDIT_CARD",
+                  "installments": 1,
+                  "capture": true,
+                  "card": {
+                      "number": this.numeroCartao,
+                      "exp_month": this.mesExpiracao,
+                      "exp_year": this.anoExpiracao,
+                      "security_code": this.codSeguranca,
+                      "holder": {
+                          "name": this.nomeCartao
+                      },
+                      "store": false
+                  }
+              },
+              "notification_urls": [
+                  "https://meusite.com/notificacoes"
+              ]
+          }
+      ]
+    }
+    let total = 0;
+    for (let i = 0; i < this.listaCarrinho.length; i++) {
+      dados.items.push(          {
+              "reference_id": this.listaCarrinho[i].idProduto.id,
+              "name": this.listaCarrinho[i].idProduto.nome,
+              "quantity": this.listaCarrinho[i].quantidade,
+              "unit_amount": this.listaCarrinho[i].idProduto.preco
+          })
+      total= this.listaCarrinho[i].idProduto.preco *  this.listaCarrinho[i].quantidade + total 
+    }
 
-    axios.post('floriculturaapp/compra/finalizar', data)
+    dados.charges[0].amount.value = total
 
+    console.log(dados)
+    axios.post('floriculturaapp/compra/finalizar', dados)
+
+   this.LimparCarrinho()
   },
+
+  getCarrinho(){
+        axios.get('floriculturaapp/carrinho').then(response => {
+          this.listaCarrinho = response.data
+        })
+  },
+
+  LimparCarrinho(){
+      for (let i = 0; i < this.listaCarrinho.length; i++) {
+        axios.delete('floriculturaapp/carrinho/'+ this.listaCarrinho[i].id).then(() => {
+          })
+      }
+      this.getCarrinho()
+    }
   
 }
 }
