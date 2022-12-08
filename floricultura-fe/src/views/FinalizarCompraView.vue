@@ -105,23 +105,6 @@ export default {
   },
   methods: {
   realizarPagamento(){
-    let dadosnovo = [
-      (Math.random() + 1).toString(36).substring(2),
-      this.nomeUsuario,
-      this.rua,
-      this.numero,
-      this.complemento,
-      this.bairro,
-      this.cidade,
-      this.estado,
-      this.cep,
-      this.numeroCartao,
-      this.mesExpiracao,
-      this.anoExpiracao,
-      this.codSeguranca,
-      this.nomeCartao,
-      items= []
- ]
     let dados ={
       "reference_id": (Math.random() + 1).toString(36).substring(2),
       "customer": {
@@ -169,7 +152,7 @@ export default {
               "payment_method": {
                   "type": "CREDIT_CARD",
                   "installments": 1,
-                  "capture": true,
+                  "capture": "true",
                   "card": {
                       "number": this.numeroCartao,
                       "exp_month": this.mesExpiracao,
@@ -178,7 +161,7 @@ export default {
                       "holder": {
                           "name": this.nomeCartao
                       },
-                      "store": false
+                      "store": "false"
                   }
               },
               "notification_urls": [
