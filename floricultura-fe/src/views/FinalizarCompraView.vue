@@ -181,7 +181,8 @@ export default {
       total= this.listaCarrinho[i].idProduto.preco *  this.listaCarrinho[i].quantidade + total 
     }
 
-    dados.charges[0].amount.value = total
+    total = String(total + "00")
+    dados.charges[0].amount.value = total 
 
     console.log(dados)
     axios.post('floriculturaapp/compra/finalizar', dados)

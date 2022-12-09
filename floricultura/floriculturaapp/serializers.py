@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from .models import Produto
 from .models import Carrinho
+from .models import HistoricoCompras
 
 class ProdutoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,3 +25,11 @@ class CarrinhoSerializer(serializers.ModelSerializer):
         "quantidade"
         )
         depth = 1
+
+class HistoricoComprasSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HistoricoCompras
+        fields = (
+            "id",
+            "valor_total"
+        )
